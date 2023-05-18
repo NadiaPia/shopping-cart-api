@@ -1,0 +1,7 @@
+
+post http://localhost:3001/products
+content-Type: application/json
+
+{
+    "image": "image"
+}
