@@ -2,9 +2,12 @@ const express = require ("express");
 const app = express();
 const cors = require ("cors");
 
+
 //middlewares:
-app.use(express.json());  //to be able to unparse the json data in the req.body
+app.use(express.json({limit: '50mb'}));  //{limit: '50mb'}) to be able to upload big images (in models add type: DataTypes.BLOB('long'),)
 app.use(cors());
+
+const db = require("./models");
 
 //Routers
 
@@ -15,8 +18,17 @@ app.use("/products", productsRouter) //what routes to handle
 
 
 
-app.listen (3001, () => {
-    console.log("SEREVER IS RUNNING ON PORT 3001")
-})
 
 
+
+
+
+
+
+
+
+db.sequelize.sync().then(() => {
+    app.listen(3001, () => {
+        console.log("SEREVER IS RUNNING ON PORT 3001")
+    });
+});
