@@ -17,8 +17,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        if(!req.body?.image) {
-            return res.status(500).json
+        if(!req.body?.imageUrl) {
+            return res.status(500).json({error: 'image is missing'})
         }
         //console.log("IMAGE UPLOADED");
         console.log("req.body", req.body);
