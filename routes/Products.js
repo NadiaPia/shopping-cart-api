@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cloudinary = require("../utils/cloudinary");
 const { Products } = require("../models");
 
 
@@ -33,9 +34,20 @@ router.delete("/:id", async (req, res) => {
     const productId = req.params.id ;
     console.log("req.headers.publicId", req.headers.publicid) //because of the headers' value is case sensative publicId from FE turnes to the publicid on the BE
     
-    res.json("the delete request received")
+    let product = await Products.findOne({where: {id: productId}});
+
+    //delete image from the cloudinary
+    try{
+        await cloudinary.uploader.destroy(product.publicId);
+    }
+    catch(e) {console.log("error", e)}
+    //console.log("deleted from cloudinary")
+
+    //delete the whole product from the db
+    await Products.destroy({where: {id: productId}});
+    res.json("DELETED SUCCESFULLY")
 })
-//https://api.cloudinary.com/v1_1/dhq7myqzj/image/destroy -X POST --data 'public_id=sample&resource_type=video&timestamp=173719931&api_key=436464676&signature=a788d68f86a6f868af'
+
 
 module.exports = router;
 

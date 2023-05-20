@@ -2,6 +2,8 @@ const express = require ("express");
 const app = express();
 const cors = require ("cors");
 
+require("dotenv").config();
+
 
 //middlewares:
 app.use(express.json({limit: '50mb'}));  //{limit: '50mb'}) to be able to upload big images (in models add type: DataTypes.BLOB('long'),)
