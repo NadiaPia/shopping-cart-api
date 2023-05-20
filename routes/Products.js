@@ -27,7 +27,15 @@ router.post("/", async (req, res) => {
         const product = await Products.create(newProduct);
         res.json("product" );
     } catch (e) {console.log(e)}
-})
+});
 
+router.delete("/:id", async (req, res) => {
+    const productId = req.params.id ;
+    console.log("req.headers.publicId", req.headers.publicid) //because of the headers' value is case sensative publicId from FE turnes to the publicid on the BE
+    
+    res.json("the delete request received")
+})
+//https://api.cloudinary.com/v1_1/dhq7myqzj/image/destroy -X POST --data 'public_id=sample&resource_type=video&timestamp=173719931&api_key=436464676&signature=a788d68f86a6f868af'
 
 module.exports = router;
+
