@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     try {
         const allProducts = await Products.findAll();
         res.json(allProducts)
-        console.log("allProducts", allProducts)
+        //console.log("allProducts", allProducts)
     } catch (e) {console.log(e)}
 })
 
