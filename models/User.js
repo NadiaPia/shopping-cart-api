@@ -12,5 +12,13 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     })
+
+    Users.associate = (models) => {
+        Users.hasMany(models.Cart, {
+            onDelete: "cascade",  //if we delete a user, it disappear in cart
+        });
+    };
+    //That meens in the Cart table will appear one more column UserID
+
     return Users;
 }
