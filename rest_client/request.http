@@ -29,3 +29,9 @@ content-Type: application/json
     "password": "pavel"
 }
 #######
+
+
+get http://localhost:3001/auth/logout
+content-Type: application/json
+
+#######

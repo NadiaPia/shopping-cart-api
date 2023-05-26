@@ -6,7 +6,7 @@ const { sign } = require('jsonwebtoken');
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 //const session = require("express-session");
-const {validateToken} = require("../middlewares/AuthMiddlewares")
+const { validateToken } = require("../middlewares/AuthMiddlewares")
 
 
 
@@ -91,7 +91,17 @@ router.post("/login", async (req, res) => {
 
 router.get("/login", validateToken, (req, res) => {
     res.json(req.user);
-    console.log("req.user", req.user)
+    //console.log("req.user", req.user)
+})
+
+router.get("/logout", async(req, res) => {
+    //console.log("req.cookies", req.cookies) //'access-tokennn': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdmVsIiwi.....'
+    res.clearCookie("access-tokennn");
+    res.status(200).json({
+        status: 'success',
+        message: 'Logged out...'
+    });
+    
 })
 
 
