@@ -35,3 +35,13 @@ get http://localhost:3001/auth/logout
 content-Type: application/json
 
 #######
+
+
+post http://localhost:3001/cart/2
+content-Type: application/json
+
+{
+    "username": "pavel",
+    "password": "pavel"
+}
+#######
