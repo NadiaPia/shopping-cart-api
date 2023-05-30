@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { Cart } = require("../models");
+const { Products } = require("../models");
+
+const { validateToken } = require("../middlewares/AuthMiddlewares")
+
 
 //    "/carts" = "/";
 
@@ -19,6 +23,8 @@ router.post("/:id", async (req, res) => {
 
 });
 
+//change the quantity of items
+
 router.put("/:id", async (req, res) => {
     try {
         const productId = req.params.id;
@@ -31,6 +37,23 @@ router.put("/:id", async (req, res) => {
     }
     
 })
+
+router.get("/", validateToken, async (req, res) => {
+    try {
+        //console.log("req.cookies", req.cookies) //'access-tokennn': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hZGlhIiw...'
+        //console.log("req.user", req.user) // { username: 'nadia', id: 1, iat: 1685404834 }
+
+        const user = req.user //req.user is from validateToken        
+        const cartProducts = await Cart.findAll({ where: { UserId: user.id }, include: [{model: Products, reqired: true}] })      
+        res.json(cartProducts)
+        
+        
+    } catch (error) {
+        console.log("error", error);
+        res.status(500).json({ error: error })
+    }
+
+});
 
 
 
