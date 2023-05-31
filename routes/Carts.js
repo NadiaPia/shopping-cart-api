@@ -28,14 +28,27 @@ router.post("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const productId = req.params.id;
-        const { userId, quantity } = req.body       
-        const cartProduct = await Cart.update({ quantity: quantity}, { where: { ProductId: productId, UserId: userId } })        
+        const { userId, quantity } = req.body
+        const cartProduct = await Cart.update({ quantity: quantity }, { where: { ProductId: productId, UserId: userId } })
         res.json(cartProduct)
     } catch (error) {
         console.log("error", error);
         res.status(500).json({ error: error })
     }
-    
+
+})
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+        await Cart.destroy({ where: { id: id } })
+        res.json("PRODUCT DELETED FROM CART")
+    } catch (error) {
+        console.log("error", error);
+        res.status(500).json({ error: error })
+    }
+
+
 })
 
 router.get("/", validateToken, async (req, res) => {
@@ -44,10 +57,10 @@ router.get("/", validateToken, async (req, res) => {
         //console.log("req.user", req.user) // { username: 'nadia', id: 1, iat: 1685404834 }
 
         const user = req.user //req.user is from validateToken        
-        const cartProducts = await Cart.findAll({ where: { UserId: user.id }, include: [{model: Products, reqired: true}] })      
+        const cartProducts = await Cart.findAll({ where: { UserId: user.id }, include: [{ model: Products, reqired: true }] })
         res.json(cartProducts)
-        
-        
+
+
     } catch (error) {
         console.log("error", error);
         res.status(500).json({ error: error })
