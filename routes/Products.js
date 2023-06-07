@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const cloudinary = require("../utils/cloudinary");
 const { Products } = require("../models");
-
+const { default: axios } = require("axios");
+const { validateToken } = require("../middlewares/AuthMiddlewares")
 
 
 //    "/products" = "/"
@@ -16,23 +17,33 @@ router.get("/", async (req, res) => {
 })
 
 
-router.post("/", async (req, res) => {
+router.post("/", validateToken, async (req, res) => {
     try {
         if(!req.body?.imageUrl) {
             return res.status(500).json({error: 'image is missing'})
         }
-        //console.log("IMAGE UPLOADED");
-        console.log("req.body", req.body);
+        console.log("IMAGE UPLOADED");        
+
+        
         const newProduct = req.body; 
-        console.log("req.body", req.body) //{image: 'http://res.cloudinary.com/dhq7myqzj/image/upload/v1684455040/fgljd5eacdhjirya0kdm.jpg'}
+        newProduct.UserId = req.user.id;
+        //console.log("req.body", req.body) //{image: 'http://res.cloudinary.com/dhq7myqzj/image/upload/v1684455040/fgljd5eacdhjirya0kdm.jpg'}
+        console.log("newProduct", newProduct) //{
+            //imageUrl: 'http://res.cloudinary.com/dhq7myqzj/image/upload/v1686077979/rolv26sbdjhztkym2fz4.png',
+            //publicId: 'rolv26sbdjhztkym2fz4',
+            //title: 'dreeees',
+            //price: '14',
+            //UserId: 1
+          //}
         const product = await Products.create(newProduct);
-        res.json("product" );
+        //res.json("product" );
     } catch (e) {console.log(e)}
 });
 
+
 router.delete("/:id", async (req, res) => {
     const productId = req.params.id ;
-    console.log("req.headers.publicId", req.headers.publicid) //because of the headers' value is case sensative publicId from FE turnes to the publicid on the BE
+    //console.log("req.headers.publicId", req.headers.publicid) //because of the headers' value is case sensative publicId from FE turnes to the publicid on the BE
     
     let product = await Products.findOne({where: {id: productId}});
 

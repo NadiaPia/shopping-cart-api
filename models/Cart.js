@@ -14,5 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
 
+   /* Cart.associate = (models) => {
+        Cart.belongsTo(models.Users, {
+            foreignKey: 'UserId'
+        });
+    };*/
+
     return Cart;
 } 
