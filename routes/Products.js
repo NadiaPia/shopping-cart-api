@@ -4,6 +4,8 @@ const cloudinary = require("../utils/cloudinary");
 const { Products } = require("../models");
 const { default: axios } = require("axios");
 const { validateToken } = require("../middlewares/AuthMiddlewares")
+const sequelize = require("sequelize");
+
 
 
 //    "/products" = "/"
@@ -20,11 +22,14 @@ router.get("/filter", async (req, res) => {
     try {
         //console.log("req.headers.searchitem", req.headers.searchitem)
         const searchItem = req.headers.searchitem;
-        const filterProducts = await Products.findAll({where: {title: searchItem}});
+        const filterProducts = await Products.findAll({
+            where: {title: sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', '%' + searchItem + '%')}
+
+        });
         console.log("filterProductsssssssssssssss", filterProducts)
         res.json(filterProducts)
 
-    } catch (error) {console.log(e)}
+    } catch (error) {console.log(error)}
 
 })
 
