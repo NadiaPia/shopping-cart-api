@@ -16,6 +16,18 @@ router.get("/", async (req, res) => {
     } catch (e) {console.log(e)}
 })
 
+router.get("/filter", async (req, res) => {
+    try {
+        //console.log("req.headers.searchitem", req.headers.searchitem)
+        const searchItem = req.headers.searchitem;
+        const filterProducts = await Products.findAll({where: {title: searchItem}});
+        console.log("filterProductsssssssssssssss", filterProducts)
+        res.json(filterProducts)
+
+    } catch (error) {console.log(e)}
+
+})
+
 
 router.post("/", validateToken, async (req, res) => {
     try {
