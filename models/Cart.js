@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
 
     Cart.associate = (models) => {
         Cart.belongsTo(models.Products, {
-            foreignKey: 'ProductId'
+            foreignKey: 'ProductId',
+            onDelete: "cascade",  //if we delete a product, it disappear in cart
+            
         });
     };
 

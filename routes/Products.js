@@ -53,7 +53,7 @@ router.post("/", validateToken, async (req, res) => {
             //UserId: 1
           //}
         const product = await Products.create(newProduct);
-        //res.json("product" );
+        res.json("product" );
     } catch (e) {console.log(e)}
 });
 

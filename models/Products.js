@@ -21,9 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     Products.associate = (models) => {
-        Products.hasMany(models.Cart, {
-            onDelete: "cascade",  //if we delete a product, it disappear in cart
-        });
+        Products.hasMany(models.Cart);
     };
     //That meens in the Cart table will appear one more column ProductsID
 
