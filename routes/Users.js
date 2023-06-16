@@ -14,12 +14,21 @@ const { validateToken } = require("../middlewares/AuthMiddlewares")
 
 router.post("/", async (req, res) => {
     const { username, password } = req.body;
-    bcrypt.hash(password, 10).then((hash) => {
-        Users.create({
+    bcrypt.hash(password, 10).then(async (hash) => {
+        const userReg = await Users.create({
             username: username,
             password: hash,
         })
-        res.json("------------USER IS SET UP TO THE DB---------------")
+        console.log("userRegggggggggggg", userReg.id) //id: 9, username: Alisa, password:$2b$10....JgpKmomdbnzVy'
+        //res.json("------------USER IS SET UP TO THE DB---------------")
+
+        const accessToken = sign({ username: userReg.username, id: userReg.id }, process.env.SECRET_KEY)
+            //create a cookie in a browser:
+            res.cookie("access-tokennn", accessToken, {
+                maxAge: 60 * 60 * 24 * 30 * 1000,
+                httpOnly: true, //will make our cookie not accessable to users: they cannot type in the console.log tab of a browser  somethig like: document.cookies.....               
+            })
+            res.json({ token: accessToken, username: userReg.username, id: userReg.id })
     }).catch((err) => {
         if (err) {
             res.status(400).json({ error: err });
