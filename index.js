@@ -19,7 +19,7 @@ app.use(cookieParser());  //every request will have this middleware applying
 
 app.use(express.json({limit: '50mb'}));  //{limit: '50mb'}) to be able to upload big images (in models add type: DataTypes.BLOB('long'),)
 app.use(cors({     //cookie
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3002"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
@@ -53,6 +53,9 @@ app.use("/carts", cartsRouter);
 
 const profileRouter = require("./routes/Profile");
 app.use("/profile", profileRouter)
+
+const paymentRouter = require("./routes/Payment");
+app.use("/payment", paymentRouter)
 
 
 
