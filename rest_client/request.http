@@ -50,3 +50,9 @@ get http://localhost:3001/carts
 content-Type: application/json
 
 #######
+#######
+
+delete http://localhost:3001/carts/clearCart
+content-Type: application/json
+
+#######

@@ -20,7 +20,6 @@ router.post("/:id", async (req, res) => {
         console.log("error", error);
         res.status(500).json({ error: error })
     }
-
 });
 
 //change the quantity of items
@@ -33,10 +32,15 @@ router.put("/:id", async (req, res) => {
         res.json(cartProduct)
     } catch (error) {
         console.log("error", error);
-        res.status(500).json({ error: error })
+        res.status(500).json({ error: error });
     }
+});
 
-})
+router.delete("/clearCart", validateToken, async (req, res) => {
+    const user = req.user;    
+    await Cart.destroy({ where: { UserId: user.id } });
+    res.json('PRODUCTS DELETED FROM CART');
+});
 
 router.delete("/:id", async (req, res) => {
     try {
@@ -47,10 +51,7 @@ router.delete("/:id", async (req, res) => {
         console.log("error", error);
         res.status(500).json({ error: error })
     }
-
-
 })
-
 router.get("/", validateToken, async (req, res) => {
     try {
         //console.log("req.cookies", req.cookies) //'access-tokennn': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hZGlhIiw...'
