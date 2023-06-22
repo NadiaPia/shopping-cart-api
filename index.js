@@ -19,8 +19,8 @@ app.use(cookieParser());  //every request will have this middleware applying
 
 app.use(express.json({limit: '50mb'}));  //{limit: '50mb'}) to be able to upload big images (in models add type: DataTypes.BLOB('long'),)
 app.use(cors({     //cookie
-    origin: "*",
-    //origin: ["http://localhost:3002", "http://192.168.0.176:3002", "https://shopping-hunter.web.app/"],
+    //origin: "*",
+    origin: ["http://localhost:3002", "http://192.168.0.176:3002", "https://shopping-hunter.web.app/", "https://shopping-hunter.web.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
