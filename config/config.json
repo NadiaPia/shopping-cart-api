@@ -17,7 +17,7 @@
     "username": "root",
     "password": null,
     "database": "database_production",
-    "host": "https://fullstack-pavel.herokuapp.com/",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }
