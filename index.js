@@ -4,7 +4,7 @@ const cors = require ("cors");
 const cookieParser = require("cookie-parser");
 //const bodyParser = require("body-parser"); //--------------if I need use express-session instead of JWT------------------
 //const session = require("express-session");//--------------if I need use express-session instead of JWT------------------
-
+const PORT = process.env.PORT || 3001;
 
 const db = require("./models");
 
@@ -65,7 +65,7 @@ app.use("/payment", paymentRouter)
 
 
 db.sequelize.sync().then(() => {
-    app.listen(3001, () => {
-        console.log("SEREVER IS RUNNING ON PORT 3001")
+    app.listen(PORT, () => {
+        console.log(`SEREVER IS RUNNING ON PORT ${PORT}`)
     });
 });
