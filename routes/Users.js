@@ -25,6 +25,8 @@ router.post("/", async (req, res) => {
             res.cookie("access-tokennn", accessToken, {
                 maxAge: 60 * 60 * 24 * 30 * 1000,
                 httpOnly: true, //will make our cookie not accessable to users: they cannot type in the console.log tab of a browser  somethig like: document.cookies.....               
+                secure: true,
+                sameSite: false,
             })
             res.json({ token: accessToken, username: userReg.username, id: userReg.id })
     }).catch((err) => {
